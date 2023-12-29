@@ -17,12 +17,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        submodules: recursive
 
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
         go-version: '1.19.8'
-        submodules: recursive
 
     - name: Build
       run: make -p build && cd build && make -C .. all
