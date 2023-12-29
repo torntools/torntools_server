@@ -1,0 +1,3 @@
+[submodule "torntools_proto"]
+	path = torntools_proto
+	url = git@github.com:torntools/torntools_proto.git
