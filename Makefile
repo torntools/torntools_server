@@ -19,5 +19,5 @@ clean:
 	rm -rf gen
 	rm -rf build/bin
 
-all: proto torntools_server
+all: proto torntools_server simple_client
 	echo "build all"

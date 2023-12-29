@@ -2,6 +2,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 )
 
 type TornLog struct {
@@ -15,10 +16,14 @@ type TornLog struct {
 }
 
 func ParseTornLogs(str []byte) ([]TornLog, error) {
+	if len(str) <= 2 {
+		return  make([]TornLog, 0), nil
+	}
 	var tornLogMap map[string]TornLog
 	err := json.Unmarshal(str, &tornLogMap)
 	if err != nil {
-		return nil, err
+		errorMsg := "str: " + string(str) + ", " + err.Error()
+		return nil, errors.New(errorMsg)
 	}
 	tornLogs := make([]TornLog, 0, len(tornLogMap))
 	for key, tornLog := range tornLogMap {

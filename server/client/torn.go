@@ -3,9 +3,10 @@ package client
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
+	"io"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 
 	"github.com/panaka13/torntools_server/server/model"
@@ -16,8 +17,7 @@ func queryTorn(url string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	ret := make([]byte, resp.ContentLength)
-	_, err = resp.Body.Read(ret)
+	ret, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -25,20 +25,21 @@ func queryTorn(url string) ([]byte, error) {
 }
 
 func GetLogInfo(api string, user, from, to int32, logTypes []int) ([]model.TornLog, error) {
-	url, _ := url.Parse("https://api.torn.com/user" + string(user))
+	queryUrl, _ := url.Parse("https://api.torn.com/user/" + strconv.Itoa(int(user)))
 	logTypeStrs := make([]string, 0, len(logTypes))
-
-	query := url.Query()
+	for _, log := range logTypes {
+		logTypeStrs = append(logTypeStrs, strconv.Itoa(int(log)))
+	}
+	query := queryUrl.Query()
 	query.Set("selections", "log")
 	query.Set("key", api)
-	query.Set("from", string(from))
-	query.Set("to", string(to))
+	query.Set("from", strconv.Itoa(int(from)))
+	query.Set("to", strconv.Itoa(int(to)))
 	query.Set("log", strings.Join(logTypeStrs, ","))
 
-	url.RawQuery = query.Encode()
+	queryUrl.RawQuery = query.Encode()
 
-	fmt.Println(url.String())
-	resp, err := queryTorn(url.String())
+	resp, err := queryTorn(queryUrl.String())
 	if err != nil {
 		return nil, err
 	}
@@ -46,17 +47,16 @@ func GetLogInfo(api string, user, from, to int32, logTypes []int) ([]model.TornL
 }
 
 func GetEventInfo(api string, user, from, to int32) ([]model.TornEvent, error) {
-url, _ := url.Parse("https://api.torn.com/user" + string(user))
-	query := url.Query()
-	query.Set("selections", "log")
+	queryUrl, _ := url.Parse("https://api.torn.com/user/" + strconv.Itoa(int(user)))
+	query := queryUrl.Query()
+	query.Set("selections", "events")
 	query.Set("key", api)
-	query.Set("from", string(from))
-	query.Set("to", string(to))
+	query.Set("from", strconv.Itoa(int(from)))
+	query.Set("to", strconv.Itoa(int(to)))
 
-	url.RawQuery = query.Encode()
+	queryUrl.RawQuery = query.Encode()
 
-	fmt.Println(url.String())
-	resp, err := queryTorn(url.String())
+	resp, err := queryTorn(queryUrl.String())
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,8 @@ func handleLogResponse(resp []byte) ([]model.TornLog, error) {
 	var respMap map[string]json.RawMessage
 	err := json.Unmarshal(resp, &respMap)
 	if err != nil {
-		return nil, err
+		errorMsg := "response: " + string(resp) + err.Error()
+		return nil, errors.New(errorMsg)
 	}
 	errorMsg, exist := respMap["error"]
 	if exist {
