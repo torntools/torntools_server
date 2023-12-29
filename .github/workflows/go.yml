@@ -25,10 +25,7 @@ jobs:
         submodules: recursive
 
     - name: Build
-      run: 
-      - mkdir -p build
-      - cd build && make -C .. all
-      - go build -v ./...
+      run: make -p build && cd build && make -C .. all
 
     - name: Test
       run: go test -v ./...
