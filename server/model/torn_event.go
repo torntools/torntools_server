@@ -5,9 +5,9 @@ import (
 )
 
 type TornEvent struct {
-	Id string
+	Id        string
 	Timestamp int32
-	Event string
+	Event     string
 }
 
 func ParseTornEvents(str []byte) ([]TornEvent, error) {

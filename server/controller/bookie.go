@@ -16,10 +16,10 @@ import (
 
 const (
 	threeWayOrdinary = "3-Way Ordinary time"
-	twoWayFull = "2-Way Full event"
-	asianHandicap = "Asian Handicap"
-	overUnder = "Over/Under"
-	btts = "Both Teams to Score"
+	twoWayFull       = "2-Way Full event"
+	asianHandicap    = "Asian Handicap"
+	overUnder        = "Over/Under"
+	btts             = "Both Teams to Score"
 )
 
 var (

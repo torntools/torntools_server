@@ -10,7 +10,7 @@ func isTornEventEqual(this, other TornEvent) bool {
 	if this.Id != other.Id {
 		return false
 	}
-	if this.Timestamp != other.Timestamp{
+	if this.Timestamp != other.Timestamp {
 		return false
 	}
 	if this.Event != other.Event {
@@ -39,19 +39,19 @@ func TestParseTornEvent(t *testing.T) {
 
 	expected := []TornEvent{
 		{
-			Id: "GwZ3pxcRwiFoeyC86vlA",
+			Id:        "GwZ3pxcRwiFoeyC86vlA",
 			Timestamp: 1703478314,
-			Event: "You have been given 10x Snowballs and 3x Special Refills. Have a wonderful day!",
+			Event:     "You have been given 10x Snowballs and 3x Special Refills. Have a wonderful day!",
 		},
 		{
-			Id: "iYEqxSgkKpA4B0FHGkJE",
+			Id:        "iYEqxSgkKpA4B0FHGkJE",
 			Timestamp: 1703436553,
-			Event: "You're <a href = http://www.torn.com/\"http://www.torn.com/http://www.torn.com/profiles.php?XID=7045\">GanjaMama</a>'s Secret Santa. Are you going to make their holiday special, or will you be the grinch?",
+			Event:     "You're <a href = http://www.torn.com/\"http://www.torn.com/http://www.torn.com/profiles.php?XID=7045\">GanjaMama</a>'s Secret Santa. Are you going to make their holiday special, or will you be the grinch?",
 		},
 		{
-			Id: "oUHbIURCzmGgaTASnDN6",
+			Id:        "oUHbIURCzmGgaTASnDN6",
 			Timestamp: 1703433528,
-			Event: "You're <a href = http://www.torn.com/\"http://www.torn.com/http://www.torn.com/profiles.php?XID=7045\">GanjaMama</a>'s Secret Santa, oh what fun, will you send a gift or make them run?",
+			Event:     "You're <a href = http://www.torn.com/\"http://www.torn.com/http://www.torn.com/profiles.php?XID=7045\">GanjaMama</a>'s Secret Santa, oh what fun, will you send a gift or make them run?",
 		},
 	}
 
