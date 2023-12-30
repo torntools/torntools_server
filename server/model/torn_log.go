@@ -17,7 +17,7 @@ type TornLog struct {
 
 func ParseTornLogs(str []byte) ([]TornLog, error) {
 	if len(str) <= 2 {
-		return  make([]TornLog, 0), nil
+		return make([]TornLog, 0), nil
 	}
 	var tornLogMap map[string]TornLog
 	err := json.Unmarshal(str, &tornLogMap)

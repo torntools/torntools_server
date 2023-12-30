@@ -35,12 +35,12 @@ func TestHandleLogResponse(t *testing.T) {
 	assert.Nil(t, err, "Should not return error")
 	assert.Equal(t, len(tornLogs), 1, "Expected 1 instance of tornLog")
 	expected := model.TornLog{
-		Id: "77BD5LZvuvTU04LKqQI1",
-		Log: 7205,
-		Title: "Message read",
-		Category: "Messages",
+		Id:        "77BD5LZvuvTU04LKqQI1",
+		Log:       7205,
+		Title:     "Message read",
+		Category:  "Messages",
 		Timestamp: 1703417604,
-		Data: map[string]interface{}{"message": 245501027},
+		Data:      map[string]interface{}{"message": 245501027},
 	}
 	assert.True(t, isTornLogEqual(tornLogs[0], expected), "Parsed TornLog not match expected")
 }
@@ -67,9 +67,9 @@ func TestHandleEventResponse(t *testing.T) {
 	assert.Nil(t, err, "Should not return error")
 	assert.Equal(t, len(tornEvents), 1, "Expect 1 instance of tornEvent")
 	expected := model.TornEvent{
-		Id: "GwZ3pxcRwiFoeyC86vlA",
+		Id:        "GwZ3pxcRwiFoeyC86vlA",
 		Timestamp: 1703478314,
-		Event: "You have been given 10x Snowballs and 3x Special Refills. Have a wonderful day!",
+		Event:     "You have been given 10x Snowballs and 3x Special Refills. Have a wonderful day!",
 	}
 	assert.True(t, isTornEventEqual(tornEvents[0], expected), "Parsed Event not match expected")
 }
@@ -94,10 +94,10 @@ func isTornLogEqual(this, other model.TornLog) bool {
 }
 
 func isTornEventEqual(this, other model.TornEvent) bool {
-	if this.Id !=  other.Id {
+	if this.Id != other.Id {
 		return false
 	}
-	if this.Timestamp!=  other.Timestamp {
+	if this.Timestamp != other.Timestamp {
 		return false
 	}
 	if this.Event != other.Event {
