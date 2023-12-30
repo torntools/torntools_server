@@ -1,0 +1,21 @@
+image: golang:latest
+
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script:
+    - mkdir -p build && cd build && make -C .. proto torntools_server
+
+test:
+  stage: test
+  scripts:
+    - make proto && go test ./server/...
+
+fmt:
+  stage: test
+  script:
+    - [[ $(gofmt -l server) ]] && echo "reformat needed" && exit 1
