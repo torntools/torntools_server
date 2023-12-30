@@ -12,8 +12,7 @@ on:
     - master
 
 jobs:
-
-  build:
+  check:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -26,7 +25,10 @@ jobs:
         go-version: '1.19.8'
 
     - name: Build
-      run: make -p build && cd build && make -C .. all
+      run: mkdir -p build && cd build && make -C .. all
 
     - name: Test
       run: go test -v ./...
+
+    - name: Format
+      run: if [ "$(gofmt -s -l server client | wc -l)" -gt 0 ]; then exit 1; fi
